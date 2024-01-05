@@ -68,8 +68,8 @@ public class Line {
 
 	public String formatearFecha() {
 		String fecha = this.getFecha();
-		String[] fechaT = fecha.split("/");
-		return fechaT[2] + "-" + fechaT[1] + "-" + fechaT[0];
+		String[] fechaT = fecha.split("-");//"/"
+		return fechaT[2] + "/" + fechaT[1] + "/" + fechaT[0];
 	}
 
 	@Override

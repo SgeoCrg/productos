@@ -4,6 +4,7 @@
 <%@ page import="com.entity.Supermarket"%>
 <%@ page import="com.entity.Bill"%>
 <%@ page import="com.entity.Line"%>
+<%@ page import="com.entity.User" %>
 <%@ page import="com.DB.DBConnect"%>
 <%@ page import="com.utils.Utils"%>
 <%@ page import="java.util.List"%>
@@ -29,10 +30,11 @@
 
 	<% BillDAO bDAO = new BillDAO(DBConnect.getConnection());
 	List<Bill> bills = new ArrayList<Bill>();
+	int userId = ((User)session.getAttribute("userobj")).getId();//Integer.parseInt(session.getAttribute("userobj").toString().split(":")[0]);
 	if(request.getParameter("id") == null || Integer.parseInt(request.getParameter("id")) == 0) {
-		bills = bDAO.getAllBills();
+		bills = bDAO.getAllBills(userId);
 	} else {
-		bills = bDAO.getBillsBySupermarket(Integer.parseInt(request.getParameter("id")));
+		bills = bDAO.getBillsBySupermarket(Integer.parseInt(request.getParameter("id")), userId);
 	}
 	%>
 
@@ -122,7 +124,7 @@
 									<tr>
 										<td></td>
 										<td style="text-align:right;">Total:  </td>
-										<td style="text-align:left;"><%= superTotal %></td>
+										<td style="text-align:left;"><%= Math.round(superTotal*100d)/100d %></td>
 									</tr>
 									<% } %>
 								</table>

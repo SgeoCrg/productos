@@ -22,13 +22,14 @@ public class LineDAO {
 		boolean f = false;
 		
 		try {
-			String sql = "INSERT INTO detalles(id_factura, producto, cantidad, total) VALUES(?,?,?,?)";
+			String sql = "INSERT INTO detalles(id_factura, producto, cantidad, total, fecha) VALUES(?,?,?,?,?)";
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, l.getIdfactura());
 			ps.setInt(2, l.getProducto());
 			ps.setInt(3, l.getCantidad());
 			ps.setFloat(4, l.getTotal());
+			ps.setString(5, l.getFecha());
 			
 			int i = ps.executeUpdate();
 			

@@ -47,12 +47,12 @@ public class Utils {
 		
 		for(int i = 0; i < list.size(); i++) {
 			if(list.get(i).getNombre().toLowerCase().equals(p.getNombre().toLowerCase()) &&
-					list.get(i).getUnidades() == p.getUnidades() &&
+					//list.get(i).getUnidades() == p.getUnidades() &&
 					list.get(i).getSupermercado() == p.getSupermercado() &&
 					list.get(i).getPrecio() == p.getPrecio()) {
 				return 0;
 			} else if(list.get(i).getNombre().toLowerCase().equals(p.getNombre().toLowerCase()) &&
-					list.get(i).getUnidades() == p.getUnidades() &&
+					//list.get(i).getUnidades() == p.getUnidades() &&
 					list.get(i).getSupermercado() == p.getSupermercado() &&
 					list.get(i).getPrecio() != p.getPrecio()){
 				version = list.get(i).getVersion() + 1;
@@ -74,6 +74,12 @@ public class Utils {
 		
 		return version;
 		
+	}
+	
+
+	public static String formatearFechaInversa(String fecha) {
+		String[] fechaT = fecha.split("-");
+		return fechaT[2] + "/" + fechaT[1] + "/" + fechaT[0];
 	}
 
 }

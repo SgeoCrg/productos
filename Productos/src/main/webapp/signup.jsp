@@ -23,26 +23,33 @@
 <h4 class="text center text-success">${succMsg }</h4>
 <c:remove var="succMsg"/>
 </c:if> --%>
+						<c:if test="${not empty succMsg }">
+							<div class="alert alert-success" role="alert">${ succMsg }</div>
+							<c:remove var="succMsg" />
+						</c:if>
 
 						<form action="register" method="post">
 							<div class="form-group">
-								<label>Enter Full Name</label> <input type="text"
+								<label>Enter Full Name</label> 
+								<input type="text"
 									required="required" class="form-control"
-									id="exampleinputEmail1" aria-describedby="emailHelp"
+									id="name" aria-describedby="emailHelp"
 									name="name">
 							</div>
 
 							<div class="form-group">
-								<label>Enter Email</label> <input type="email"
+								<label>Enter Email</label> 
+								<input type="email"
 									required="required" class="form-control"
-									id="exampleinputEmail1" aria-describedby="emailHelp"
+									id="email" aria-describedby="emailHelp"
 									name="email">
 							</div>
 
 							<div class="form-group">
-								<label for="exampleInputPassword1">Enter Password</label> <input type="password"
+								<label for="exampleInputPassword1">Enter Password</label> 
+								<input type="password" 
 									required="required" class="form-control"
-id="exampleinputPassword1" name="ps">
+									id="password" name="password">
 							</div>
 
 							<button type="submit" class="btn btn-primary badge-pill btn-block">Register</button>

@@ -18,7 +18,7 @@
 					</a>
 				</li>
 
-				<c:if test="${userobj.role eq 'admin' }">
+				<c:if test="${not empty userobj.role}">
 
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href"#" id="navbarDropdown"
@@ -26,16 +26,35 @@
 							aria-expanded="false">
 							<i class="fa fa-product-hunt" aria-hidden="true"></i> Productos 
 						</a>
+				</c:if>
 						
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						
+				<c:if test="${userobj.role eq 'admin' }">
 							<a class="dropdown-item" href="addProduct.jsp">
 								<i class="fa fa-plus-circle"></i> Añadir Producto
 							</a> 
 							<a class="dropdown-item" href="editProduct.jsp">
 								<i class="fa fa-pencil" aria-hidden="true"></i> Editar Producto 
 							</a>
+						<!-- </div> -->
+				</c:if>
+					<c:if test="${not empty userobj.role}">
+						<!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+							<a class="dropdown-item" href="viewProductsUse.jsp">
+								<i class="fa fa-plus-circle"></i> Ver Productos Usados
+							</a> 
+							<a class="dropdown-item" href="compareProducts.jsp">
+								<i class="fa fa-plus-circle"></i> Comparar Productos
+							</a> 
+							<a class="dropdown-item" href="makeOrder.jsp">
+								<i class="fa fa-pencil" aria-hidden="true"></i> Hacer pedido 
+							</a>
 						</div>
+					</c:if>
 					</li>
+				
+				<c:if test="${userobj.role eq 'admin' }">
 
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href"#" id="navbarDropdown"
@@ -54,6 +73,7 @@
 						</div>
 					</li>
 				</c:if>
+				<c:if test="${not empty userobj.role}">
 				
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
@@ -74,6 +94,7 @@
 						</a>
 					</div>
 				</li>
+				</c:if>
 
 				<!-- <li class="nav-item">
 					<a class="nav-link" href="viewBills.jsp">
@@ -83,9 +104,12 @@
 			</ul>
 		</div>
 		<form class="form-inline my-2 my-lg-0">
-			<a href="login.jsp" class="btn btn-light mr-1"><i
-				class="fas fa-sign-in-alt"></i>LogIn</a> <a href="signup.jsp"
-				class="btn btn-light"><i class="fas fa-user"></i>SignUp</a>
+		<% if(session.getAttribute("userobj") == null) {%>
+			<a href="login.jsp" class="btn btn-light mr-1"><i class="fas fa-sign-in-alt"></i>LogIn</a> 
+			<% } else { %>
+			<a href="login.jsp" class="btn btn-light mr-1"><i class="fas fa-sign-out-alt"></i>LogOut</a>
+			<% } %>
+			<a href="signup.jsp" class="btn btn-light"><i class="fas fa-user"></i>SignUp</a>
 		</form>
 	</div>
 </nav>

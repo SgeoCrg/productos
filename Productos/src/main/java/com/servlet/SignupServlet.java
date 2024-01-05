@@ -13,34 +13,33 @@ import com.DB.DBConnect;
 import com.dao.UserDAO;
 import com.entity.User;
 
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
-
+@WebServlet("/register")
+public class SignupServlet extends HttpServlet {
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		try {
-			String email=req.getParameter("email");
-			String password=req.getParameter("password");
-			User user = new User();
-			HttpSession session = req.getSession();
+		try {			
+			HttpSession session = req.getSession(); 
+			User newUser = new User();
+			
+			newUser.setName(req.getParameter("name"));
+			newUser.setEmail(req.getParameter("email"));
+			newUser.setPassword(req.getParameter("password"));
 			
 			UserDAO uDAO = new UserDAO(DBConnect.getConnection());
 			
-			user = uDAO.getUserByEmail(email);
-			
-			//if("admin@gmail.com".equals(email) && "admin@121".equals(password)) {
-			if(user.getPassword().equals(password)) {
-				//user.setRole("admin");
-				session.setAttribute("userobj", user);
-				System.out.println(session.getAttribute("userobj"));
-				resp.sendRedirect("admin.jsp");
+			boolean f = uDAO.register(newUser);
+
+			if(f) {
+				session.setAttribute("succMsg", "user created successfully..");
+				resp.sendRedirect("login.jsp");
 				
 			} else {
-				
+				session.setAttribute("succMsg", "Something wrong on server");
+				resp.sendRedirect("signup.jsp");
 			}
 			
-			
+			resp.sendRedirect("signup.jsp");
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -46,6 +46,7 @@ public class ProductDAO {
 		}
 		return f;
 	}
+	
 	public List<Product> getProducts() {
 		
 		List<Product> list = new ArrayList<Product>();
@@ -212,5 +213,71 @@ public class ProductDAO {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public List<Product> getProductsByText(String text) {
+		List<Product> list = new ArrayList<Product>();
+		Product p = null;
+		
+		try {
+			String sql = "SELECT * FROM productos WHERE nombre LIKE ?";
+			
+			String name = "%" + text + "%";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, name);
+			
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				p = new Product();
+				p.setId(Integer.parseInt(rs.getString(1)));
+				p.setNombre(rs.getString(2));
+				p.setPrecio(Float.parseFloat(rs.getString(3)));
+				p.setUnidades(Integer.parseInt(rs.getString(4)));
+				p.setSupermercado(Integer.parseInt(rs.getString(5)));
+				p.setVersion(Integer.parseInt(rs.getString(6)));
+				list.add(p);
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public List<Product> getProductsUsage(String id, String fIni, String fFin) {
+		List<Product> list = new ArrayList<Product>();
+		Product p = null;
+		
+		try {
+			String sql = "SELECT p.id AS id_producto, p.nombre AS nombre_producto, count(d.id) as cantidad_en_facturas ";
+			sql += "FROM productos p ";
+			sql += "JOIN detalles d ON p.id = d.producto ";
+			sql += "JOIN facturas f ON d.id_factura = f.id ";
+			if(fIni != null) {
+			sql += "WHERE f.fecha >='" + fIni + "' ";
+			}
+			if(fFin != null) {
+			sql += "AND f.fecha <='" + fFin + "' ";
+			}
+			if(Integer.parseInt(id) != 1) {
+			sql += "AND f.id_usuario = " + id + " ";
+			}
+			sql += "GROUP BY p.id, p.nombre ORDER BY cantidad_en_facturas DESC";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				 p = new Product();
+				 p.setId(rs.getInt(1));
+				 p.setNombre(rs.getString(2));
+				 p.setNumeroUsado(rs.getInt(3));
+				 list.add(p);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

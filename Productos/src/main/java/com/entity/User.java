@@ -67,7 +67,7 @@ public class User {
 	}
 
 	public String toString() {
-		return id + ":" + name;
+		return name;
 	}
 
 }

@@ -9,6 +9,8 @@ public class Product {
 	protected int supermercado;
 	protected int version;
 	
+	protected int numeroUsado;
+	
 	public Product() {}
 	
 	public Product(String nombre, float precio, int unidades, int supermercado) {
@@ -65,6 +67,14 @@ public class Product {
 
 	public void setVersion(int version) {
 		this.version = version;
+	}
+	
+	public int getNumeroUsado() {
+		return numeroUsado;
+	}
+	
+	public void setNumeroUsado(int numeroUsado) {
+		this.numeroUsado = numeroUsado;
 	}
 
 	public String toString() {

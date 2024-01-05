@@ -9,6 +9,7 @@
 
 </head>
 <body>
+<% session.setAttribute("userobj", null); %>
 <%@include file="components/navbar.jsp" %>
 	<div class="container-fuid">
 		<div class="row p-5">
@@ -19,11 +20,19 @@
 							<i class="fa fa-user-plus fa-2x" aria-hidden="true"></i>
 							<h5>Login page</h5>
 						</div>
+						<script>
+						let formulario = document.getElementById('form');
+						formulario.reset();
+						</script>
 <%-- <c:if test="${not empty succMsg }">
 <h4 class="text-center text-danger">${succMsg }</h4>
 <c:remove var="succMsg" />
 </c:if> --%>
-						<form action="login" method="post">
+						<c:if test="${not empty succMsg }">
+							<div class="alert alert-success" role="alert">${ succMsg }</div>
+							<c:remove var="succMsg" />
+						</c:if>
+						<form id="form" action="login" method="post">
 
 							<div class="form-group">
 								<label>Enter mail</label> <input type="email"

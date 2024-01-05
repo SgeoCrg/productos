@@ -21,7 +21,7 @@ background-size: cover;
 	<%@include file="components/navbar.jsp" %>
 	<div class="container-fluid back-img">
 		<div class="text-center">
-			<h1 class="text-white p-4">Welcome Admin</h1>
+			<h1 class="text-white p-4">Welcome <%= session.getAttribute("userobj") %></h1>
 		</div>
 	</div>
 <div style="margin-top: 50px;">

@@ -29,6 +29,7 @@
 </script>
 </head>
 <body style="background-color: #f0f1f2;">
+
 	<% ProductDAO dao = new ProductDAO(DBConnect.getConnection()); 
 	List<Product> productList = new ArrayList<>();
 	if(request.getParameter("id") != null) {
@@ -73,14 +74,27 @@
 						} %>
 
 					<form action="addLine" method="post">
+						<% if (request.getParameter("factura") == null) {%>
+							<input id="esFacturaNueva" name="esFacturaNueva" value="true" type="hidden"/>
+							<script>
+								alert('aqui va la limpieza de lineas');
+							</script>
+						<% } else {%>
+							<input id="esFacturaNueva" name="esFacturaNueva" value="false" type="hidden"/>
+							<input id="facturaId" name="facturaId" type="hidden" value="<%= request.getParameter("factura") %>" />
+						<% } %>
 						<div class="form-row">
 							<div class="form-group col-md-4">
 							<div>
 								<label>Supermercado</label> 
 								
 								<label style="margin-left:20px;">Fecha:</label><input id="fecha" name="fecha" type="date" 
-								<% if (list.size() > 0) { %> disabled value="<%= list.get(0).formatearFecha() %>"
-								<%System.out.println(list.get(0).getFecha());} %>>
+								<% if (list.size() > 0) {  System.out.println(list.get(0).getFecha());%> disabled value="<%= list.get(0).formatearFecha() %>">
+								<%System.out.println(list.get(0).getFecha());} %>
+								
+								<% if(list.size() > 0)  { System.out.println(list.get(0).getFecha());%>
+								<input id="fechaOculta" name="fechaOculta" value="<%= list.get(0).formatearFecha()%>" type="hidden"
+								<% } %>>
 								
 								<select name="supermercado"
 									class="custom-select" id="supermercado"
@@ -128,7 +142,7 @@
 							</div>
 					</form>
 					<div class="form-group col-md-4" style="margin-left: 50px">
-						<form action="addBill" method="post">
+						<form action="updatePriceBill" method="post"><!-- addBill -->
 						<% //List<Line> list = new ArrayList<Line>();
 						//if(request.getParameter("factura") != null) { 
 								//LineDAO lDao = new LineDAO(DBConnect.getConnection());
@@ -136,6 +150,7 @@
 						//} %>
 							<!-- <label>Fecha: </label><input id="fecha" name="fecha" type="date" 
 								<% //if (list.size() > 0) { %> disabled <%//} %>>-->
+							<input id="idfactura" name="idFactura" type="hidden" value="<%=request.getParameter("factura") %>" />
 							<input id="idSupermercado" name="idSupermercado" type="hidden"
 								value="<%= request.getParameter("id")%>">
 							<table id="listadoProductos"
